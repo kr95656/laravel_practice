@@ -20,3 +20,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::prefix('mypage') //urlの共通部分を指定
+    ->namespace('MyPage') //コントローラーの接頭辞を指定
+    ->middleware('auth')
+    ->group(function() {
+        Route::get('edit-profile', 'ProfileController@showProfileEditForm')->name('mypage.edit-profile');
+        Route::post('edit-profile', 'ProfileController@editProfile')->name('mypage.edit-profile');
+    });
