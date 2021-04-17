@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    プロフィール編集
+プロフィール編集
 @endsection
 
 @section('content')
@@ -27,7 +27,11 @@
                     {{--  fileタイプ指定  --}}
                     <input type="file" name="avatar" class="d-none" id="avatar" accept="image/png,image/jpeg,image/gif">
                     <label for="avatar" class="d-inline-block">
-                        <img src="/images/avatar-default.svg" class="rounded-circle" style="object-fit: cover; width: 200px; height: 200px; cursor: pointer;">
+                        @if(!empty($user->avatar_file_name))
+                            <img src="/storage/avatars/{{$user->avatar_file_name}}" class="rounded-circle" style="object-fit: cover; width: 200px; height: 200px; cursor: pointer;">
+                        @else
+                            <img src="/images/avatar-default.svg" class="rounded-circle" style="object-fit: cover; width: 200px; height: 200px; cursor: pointer;">
+                        @endif
                     </label>
                 </span>
 

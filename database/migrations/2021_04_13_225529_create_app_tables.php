@@ -53,9 +53,10 @@ class CreateAppTables extends Migration
      */
     public function down()
     {
+        // 親テーブルから削除すること
+        Schema::dropIfExists('items');
         Schema::dropIfExists('secondary_categories');
         Schema::dropIfExists('primary_categories');
-        Schema::dropIfExists('items');
         Schema::dropIfExists('item_conditions');
     }
 }
