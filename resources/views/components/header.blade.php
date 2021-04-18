@@ -26,6 +26,10 @@
 
                             {{--  ドロップダウンメニュー  --}}
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                {{--  商品出品画面  --}}
+                                <a class="dropdown-item" href="{{ route('mypage.sold-items') }}">
+                                    <i class="fas fa-store-alt text-left" style="width: 30px"></i>出品した商品
+                                </a>
                                 {{--  商品出品  --}}
                                 <a class="dropdown-item" href="{{ route('sell') }}">
                                     <i class="fas fa-camera text-left" style="width: 30px"></i>商品を出品する
