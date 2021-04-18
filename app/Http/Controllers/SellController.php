@@ -12,8 +12,18 @@ class SellController extends Controller
     public function showSoldItems()
     {
         // クエリを発行
-        $categories = PrimaryCategory::orderBy('sort_no')->get();
         $conditons = ItemCondition::orderBy('sort_no')->get();
+        // N+1解消
+        $categories = PrimaryCategory::query()
+                        ->with([
+                            //Eloquent Modelでリレーションを定義しているメソッド名
+                            'secondaryCategories' => function ($query) {
+                                $query->orderBy('sort_no');
+                            }
+                        ])
+                        ->orderBy('sort_no')
+                        ->get();
+
         return view('sell')
                 ->with('conditions', $conditons)
                 ->with('categories', $categories);
