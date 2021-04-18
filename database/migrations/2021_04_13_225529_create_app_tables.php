@@ -40,8 +40,13 @@ class CreateAppTables extends Migration
             $table->id();
             $table->unsignedBigInteger('item_condition_id');
             $table->unsignedBigInteger('secondary_category_id');
-            $table->unsignedBigInteger('buyer_id');
+            $table->unsignedBigInteger('buyer_id')->nullable();
             $table->unsignedBigInteger('seller_id');
+
+            $table->string('name');
+            $table->text('description');
+            $table->unsignedInteger('price');
+            $table->string('state');
 
             $table->timestamps();
 

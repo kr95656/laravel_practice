@@ -24,6 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware('auth')
 ->group(function () {
     Route::get('sell', 'SellController@showSoldItems')->name('sell');
+    Route::post('sell', 'SellController@selltems')->name('sell');
 });
 
 Route::prefix('mypage') //urlの共通部分を指定
