@@ -16,8 +16,15 @@ class Item extends Model
         return $this->belongsTo(SecondaryCategory::class);
     }
 
+    // アクセサ
     public function getIsStateSellingAttribute()
     {
         return $this->state === self::STATE_SELLING;
+    }
+
+    // アクセサ
+    public function getIsStateBoughtAttribute()
+    {
+        return $this->state === self::STATE_BOUGHT;
     }
 }
