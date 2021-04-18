@@ -69,6 +69,7 @@
                                 <optgroup label="{{ $category->name }}">
                                     @foreach ($category->secondaryCategories as $secondary_category)
                                     {{--  小カテゴリ  --}}
+                                    {{--  大カテゴリに紐づく小カテゴリを取得  --}}
                                         <option value="{{$secondary_category->id}}" {{ old('category') === $secondary_category->id ? "selected":""}}>
                                             {{$secondary_category->name}}
                                         </option>
