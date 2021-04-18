@@ -18,10 +18,11 @@ Route::get('/', 'ItemsController@showItems')->name('top');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('items/{item}', function () {return "商品詳細";})->name('item');
+Route::get('itmes/{item}', 'ItemsController@showItemsDetails')->name('item');
 
 Route::middleware('auth')
 ->group(function () {
+    Route::get('items/{item}/buy', function () { return "商品購入画面";})->name('item.buy');
     Route::get('sell', 'SellController@showSoldItems')->name('sell');
     Route::post('sell', 'SellController@selltems')->name('sell');
 });

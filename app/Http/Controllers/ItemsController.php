@@ -20,4 +20,10 @@ class ItemsController extends Controller
         return view('items.items')
                 ->with('items', $items);
     }
+
+    public function showItemsDetails (Item $item) //routeのルートパラメータで指定した変数を指定
+    {
+        return view('items.item_details')
+            ->with('item', $item);
+    }
 }
