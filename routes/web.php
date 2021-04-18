@@ -21,6 +21,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::middleware('auth')
+->group(function () {
+    Route::get('sell', 'SellController@showSoldItems')->name('sell');
+});
+
 Route::prefix('mypage') //urlの共通部分を指定
     ->namespace('MyPage') //コントローラーの接頭辞を指定
     ->middleware('auth')
