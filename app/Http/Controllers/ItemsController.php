@@ -4,9 +4,50 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 
 class ItemsController extends Controller
 {
+
+    private function settlement($itemID, $sellerID, $buyerID, $token)
+    {
+        // トランザクション処理
+        DB::beginTransaction();
+
+        try {
+            // 排他ロックし、同じレコードに対する処理が並列に実行されるのを防ぐ
+            $item = Item::lockForUpdate()->find($itemID);
+            $seller = User::lockForUpdate()->find($sellerID);
+
+            if ($item->isStateBought) {
+                throw new \Exception('多重決済');
+            }
+
+            $item->state = Item::STATE_BOUGHT;
+            $item->bought_at = Carbon::now();
+            $item->buyer_id = $buyerID;
+            $item->save();
+
+            $seller->sales += $item->price;
+            $seller->save();
+
+        } catch (\Exception $e) {
+            // ロールバック
+            DB::rollBack();
+            throw $e;
+        }
+
+        // DB保存処理確定
+        DB::commit();
+
+    }
+
     public function showItems(Request $request)
     {
         $query = Item::query();
@@ -62,6 +103,30 @@ class ItemsController extends Controller
         return view('items.item_buy_form')
                 ->with('item', $item);
     }
+
+
+    public function BuyItem(Request $request, Item $item) {
+        $user = Auth::user();
+
+        if (!$item->isStateSelling) {
+            abort(404);
+        }
+
+        $token = $request->input('card-token');
+
+        try {
+            $this->settlement($item->id, $item->seller->id, $user->id, $token);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return redirect()->back()
+                ->with('type', 'danger')
+                ->with('message', '購入処理が失敗しました');
+        }
+
+        return redirect()->route('item', [$item->id])
+            ->with('message', '商品を購入しました');
+    }
+
 
     public function escape(string $value)
     {

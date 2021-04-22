@@ -48,6 +48,7 @@ class CreateAppTables extends Migration
             $table->text('description');
             $table->unsignedInteger('price');
             $table->string('state');
+            $table->timestamp('bought_at')->nullable();
 
             $table->timestamps();
 
