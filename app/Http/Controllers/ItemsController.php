@@ -51,6 +51,18 @@ class ItemsController extends Controller
             ->with('item', $item);
     }
 
+    public function showItemsBuyForm(Item $item)
+    {
+        if (!$item->isStateSelling) {
+            abort(404);
+        }
+// echo "<pre>";
+// var_dump($item);
+// echo "</pre>";
+        return view('items.item_buy_form')
+                ->with('item', $item);
+    }
+
     public function escape(string $value)
     {
         return str_replace(

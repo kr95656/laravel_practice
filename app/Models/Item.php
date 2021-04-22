@@ -27,12 +27,14 @@ class Item extends Model
     }
 
     // アクセサ
+    // 販売中
     public function getIsStateSellingAttribute()
     {
         return $this->state === self::STATE_SELLING;
     }
 
     // アクセサ
+    // 購入済み
     public function getIsStateBoughtAttribute()
     {
         return $this->state === self::STATE_BOUGHT;

@@ -48268,19 +48268,29 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
-console.log(1);
 _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__["library"].add(_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faSearch"], _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_1__["faAddressCard"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faStoreAlt"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faShoppingBag"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faSignOutAlt"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faYenSign"], _fortawesome_free_regular_svg_icons__WEBPACK_IMPORTED_MODULE_1__["faClock"], _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faCamera"]);
 _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_0__["dom"].watch();
-document.querySelector('.image-picker input').addEventListener('change', function (e) {
-  var input = e.target;
-  var reader = new FileReader();
+var test = document.querySelector('.image-picker input');
 
-  reader.onload = function (e) {
-    input.closest('.image-picker').querySelector('img').src = e.target.result;
-  };
+if (test) {
+  test.addEventListener('change', function (e) {
+    var input = e.target;
+    var reader = new FileReader();
 
-  reader.readAsDataURL(input.files[0]);
-});
+    reader.onload = function (e) {
+      input.closest('.image-picker').querySelector('img').src = e.target.result;
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  });
+} // document.querySelector('.image-picker input').addEventListener('change', (e) => {
+//     const input = e.target;
+//     const reader = new FileReader();
+//     reader.onload = (e) => {
+//         input.closest('.image-picker').querySelector('img').src = e.target.result
+//     };
+//     reader.readAsDataURL(input.files[0]);
+// });
 
 /***/ }),
 
