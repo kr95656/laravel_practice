@@ -33,6 +33,5 @@ Route::prefix('mypage') //urlの共通部分を指定
     ->group(function() {
         Route::get('edit-profile', 'ProfileController@showProfileEditForm')->name('mypage.edit-profile');
         Route::post('edit-profile', 'ProfileController@editProfile')->name('mypage.edit-profile');
-
         Route::get('sold-items', 'SoldItemsController@showSoldItems')->name('mypage.sold-items');
     });
