@@ -10,6 +10,8 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Payjp\Charge;
+
 
 
 class ItemsController extends Controller
@@ -36,6 +38,16 @@ class ItemsController extends Controller
 
             $seller->sales += $item->price;
             $seller->save();
+
+            $charge = Charge::create([
+                'card'     => $token,
+                'amount'   => $item->price,
+                'currency' => 'jpy'
+            ]);
+
+            if (!$charge->captured){
+                throw new \Exception('支払い確定失敗');
+            }
 
         } catch (\Exception $e) {
             // ロールバック
@@ -116,6 +128,7 @@ class ItemsController extends Controller
 
         try {
             $this->settlement($item->id, $item->seller->id, $user->id, $token);
+
         } catch (\Exception $e) {
             Log::error($e);
             return redirect()->back()
