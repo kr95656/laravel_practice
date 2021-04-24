@@ -11,7 +11,6 @@ class SoldItemsController extends Controller
     public function showSoldItems()
     {
         $user = Auth::user();
-
         $items = $user->soldItems()
                     ->orderBy('id', "DESC")
                     ->get();
