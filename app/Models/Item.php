@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\CssSelector\Node\FunctionNode;
 
 class Item extends Model
 {
@@ -10,6 +11,10 @@ class Item extends Model
     const STATE_SELLING = 'selling';
     // 購入済み
     const STATE_BOUGHT = 'bought';
+
+    protected $casts = [
+        'bought_at' => 'datetime'
+    ];
 
     public function secondaryCategory()
     {
