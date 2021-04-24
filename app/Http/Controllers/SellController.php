@@ -7,11 +7,11 @@ use App\Models\ItemCondition;
 use App\Models\PrimaryCategory;
 use App\Http\Requests\SellRequest;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 
 // 画像保存処理
 use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -42,6 +42,7 @@ class SellController extends Controller
         $user = Auth::user();
 
         // input()ではなくfile()を使用
+        // file名を指定
         $imageName = $this->saveImage($request->file('item-image'));
 
         $item = new Item();
@@ -68,8 +69,10 @@ class SellController extends Controller
       */
     private function saveImage(UploadedFile $file): string
     {
+        // 一時ファイルを生成してファイルパスを取得
         $tempPath =$this->makeTempPath();
 
+        // Intervention Imageを使用して、
         Image::make($file)->fit(300, 300)->save($tempPath);
 
         $filePath = Storage::disk('public')
@@ -86,6 +89,10 @@ class SellController extends Controller
     {
         $tmp_fp = tmpfile();
         $meta = stream_get_meta_data($tmp_fp);
+
+        // dd($meta);
+        // dd($meta['uri']);
+        // exit;
         return $meta['uri'];
     }
 
