@@ -75,8 +75,7 @@ class SellController extends Controller
         // Intervention Imageを使用して、
         Image::make($file)->fit(300, 300)->save($tempPath);
 
-        $filePath = Storage::disk('public')
-                    ->putFile('item-images', new File($tempPath));
+        $filePath = Storage::disk('public')->putFile('item-images', new File($tempPath));
         return basename($filePath);
     }
 
@@ -89,10 +88,6 @@ class SellController extends Controller
     {
         $tmp_fp = tmpfile();
         $meta = stream_get_meta_data($tmp_fp);
-
-        // dd($meta);
-        // dd($meta['uri']);
-        // exit;
         return $meta['uri'];
     }
 
